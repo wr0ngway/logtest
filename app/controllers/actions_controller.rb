@@ -10,7 +10,11 @@ class ActionsController < ApplicationController
     notice = "Executed #{action}"
     case action
       when 'set_user'
-        session[:user_id] = params[:user_id].to_i
+        if params[:user_id].present?
+          session[:user_id] = params[:user_id].to_i
+        else
+          session.delete(:user_id)
+        end
       when 'log_message'
         params[:log_class].constantize.logger.error(params[:log_message])
       when 'controller_error'
