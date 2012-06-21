@@ -1,0 +1,19 @@
+log4r_config:
+  pre_config:
+    root:
+      level: DEBUG
+  loggers:
+    - name: "rails"
+      level: DEBUG
+      outputters:
+        - logfile
+
+  outputters:
+    - type: FileOutputter
+      name: logfile
+      filename: "#{log_file}"
+      trunc: 'false'
+      formatter   :
+        date_pattern: '%H:%M:%S'
+        pattern     : '%-5l %d %C [#{log4r_context}]: %M'
+        type        : PatternFormatter

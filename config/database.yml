@@ -1,0 +1,17 @@
+common: &common
+  adapter: postgresql
+  encoding: unicode
+  min_messages: warning
+  reconnect: true
+  pool: 5
+  username: postgres
+  password: postgres
+
+development:
+  <<: *common
+  database: logtest_development
+
+test: &test
+  <<: *common
+  database: logtest_test
+

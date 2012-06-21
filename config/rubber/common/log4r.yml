@@ -1,0 +1,40 @@
+<%
+  @path = "#{Rubber.root}/config/log4r.yml"
+  graylog_server = rubber_instances.for_role("graylog_server").first
+%>
+
+log4r_config:
+  pre_config:
+    root:
+      level: DEBUG
+  loggers:
+    - name: "rails"
+      level: INFO
+      outputters:
+        - logfile
+        - gelf
+
+  outputters:
+
+    - type: FileOutputter
+      name: logfile
+      filename: "#{log_file}"
+      trunc: 'false'
+      formatter   :
+        date_pattern: '%H:%M:%S'
+        pattern     : '%-5l %d %C [#{log4r_context}]: %M'
+        type        : PatternFormatter
+
+    - type: GelfOutputter
+      name: gelf
+      gelf_server: "<%= graylog_server.full_name %>"
+      gelf_port: "<%= rubber_env.graylog_server_port %>"
+      facility: "rails"
+      host: "<%= rubber_env.host %>"
+      # max_chunk_size: 'LAN'
+      # global_context_key: ''
+      # nested_context_prefix: ''
+      mapped_context_prefix: ''
+      formatter   :
+        pattern     : '%m'
+        type        : PatternFormatter

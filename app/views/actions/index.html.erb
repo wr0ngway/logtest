@@ -1,0 +1,38 @@
+<h1>Logtest actions</h1>
+
+<% flash.each do |k, v| %>
+  <p><div id="flash_<%= k %>"><%= v %></div></p>
+<% end %>
+
+<p><%=  link_to "Create", new_post_path %> or <%=  link_to "View", posts_path %> posts</p>
+
+<%= form_for :actions do |f| %>
+  <p>Pick an action to exercise some logging behavior</p>
+  
+  <p>
+    <%= radio_button_tag(:action_name, "set_user") %>
+    <%= label_tag :action_name_set_user, "Set the user_id" %>
+    <%= text_field_tag :user_id, session[:user_id] %>
+    <br/>
+    <%= radio_button_tag(:action_name, "log_message") %>
+    <%= label_tag :action_name_log_message, "Log a message" %>
+    <%= text_field_tag :log_class, nil, :placeholder => 'Logger class' %>
+    <%= text_field_tag :log_message, nil, :placeholder => 'Log message' %>
+    <br/>
+    <%= radio_button_tag(:action_name, "controller_error") %>
+    <%= label_tag :action_name_controller_error, "Controller error" %>
+    <%= text_field_tag :controller_error_message, 'bad times' %>
+    <br/>
+    <%= radio_button_tag(:action_name, "resque_ok") %>
+    <%= label_tag :action_name_resque_ok, "Run a passing resque job" %>
+    <br/>
+    <%= radio_button_tag(:action_name, "resque_error") %>
+    <%= label_tag :action_name_resque_error, "Run a failing resque job" %>
+    <%= text_field_tag :resque_error_message, 'bad times' %>
+  </p>
+  
+  <div class="actions">
+    <%= f.submit "Execute" %>
+  </div>
+  
+<% end %>
