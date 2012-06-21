@@ -14,8 +14,8 @@ class DummyJob
     end
     opts = HashWithIndifferentAccess.new(opts)
     
-    sleep_min = opts[:min_sleep] || 5
-    sleep_max = opts[:max_sleep] || 10
+    sleep_min = opts[:min_sleep] || 0
+    sleep_max = opts[:max_sleep] || 1
     sleep_delta = sleep_max - sleep_min
     sleep_time = sleep_min + rand(sleep_delta)
 
